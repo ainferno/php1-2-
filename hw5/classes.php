@@ -1,12 +1,35 @@
 <?php
-    class GuestBook
+    class TextFile
     {
-        private $f;
+        private $fname;
+        public function __construct($path)
+        {
+            $this->fname = $path;
+        }
+        public function getDat()
+        {
+            return file($this->fname);
+        }
+        public function writeDat($dat)
+        {
+            $fil = fopen($this->fname,'w');
+            foreach($dat as $rec)
+            {
+                fwrite($fil,$rec);
+            }
+            fwrite($fil,"\n");
+            fclose($fil);
+        }
+    }
+
+    class GuestBook  extends TextFile
+    {
         private $d;
         public function __construct($path)
         {
-            $this->f = $path;
-            $this->d = file($this->f);
+            parent::__construct($path);
+            $this->d = parent::getDat();
+            
         }
         public function getData()
         {
@@ -15,16 +38,11 @@
         public function append($text)
         {
             array_push($this->d,$text);
+            return $this;
         }
         public function save()
         {
-            $fil = fopen($this->f,'w');
-            foreach($this->d as $rec)
-            {
-                fwrite($fil,$rec);
-            }
-            fwrite($fil,"\n");
-            fclose($fil);
+            parent::writeDat($this->d);
         }
     }
     class Uploader
@@ -44,7 +62,7 @@
             {
                 if (0 == $_FILES[$this->name]['error']) 
                 {
-                $res = move_uploaded_file( $_FILES[$this->name]['tmp_name'], __DIR__ .'/files' );
+                    $res = move_uploaded_file( $_FILES[$this->name]['tmp_name'], __DIR__ .'/files/'.$_FILES['myimg']['name'] );
                 }
 
             }
