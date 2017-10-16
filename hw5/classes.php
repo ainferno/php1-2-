@@ -38,7 +38,7 @@
         {
             return isset($_FILES[$this->name]);
         }
-        public upload()
+        public function upload()
         {
             if($this->isUploaded())
             {
