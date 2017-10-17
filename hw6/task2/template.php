@@ -5,8 +5,8 @@
 <body>
 
 <?php if(isset($data)) { foreach($data as $record) { ?>
-<?php echo 'Name: '.$record[0]; ?><br>
-<?php echo 'Text: '.$record[1]; ?><br><br>
+<a href="/hw6/task2/article.php?id=<?php echo $record['Number']; ?>"><?php echo $record['Head'].':'; ?></a>
+<?php echo ' '.$record['Title']; ?><br><br>
 <?php }} ?>
 
 <form action="index.php" method="post"> 

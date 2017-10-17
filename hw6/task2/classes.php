@@ -15,59 +15,72 @@
             $fil = fopen($this->fname,'w');
             foreach($dat as $rec)
             {
-                fwrite($fil,$rec);
+                foreach($rec->getArticle() as $r)
+                {
+                    fwrite($fil,$r);
+                }
             }
             fwrite($fil,"\n");
             fclose($fil);
         }
     }
 
-    class GuestBook  extends TextFile
+    class Article
     {
-        private $d;
-        public function __construct($path)
+        private $Head,$Title,$Body,$Number;
+        public function __construct($Number,$Head,$Title,$Body)
         {
-            parent::__construct($path);
-            $this->d = parent::getDat();
-            
+            $this->Number=$Number;
+            $this->Head=$Head;
+            $this->Title=$Title;
+            $this->Body=$Body;
+        }
+        public function getNum()
+        {
+            return $this->Number;
+        }
+        public function getArticle()
+        {
+            //echo $this->Number.' NUMBER!!<br>';
+            return ['Number' => $this->Number,'Head' => $this->Head,'Title' => $this->Title,'Body' => $this->Body];
+        }
+    }
+    
+    class News extends TextFile
+    {
+        private $news = [];
+        public function __construct($name)
+        {
+            parent::__construct($name);
+            $dat = parent::getDat();
+            foreach($dat as $res)
+            {
+                $r = explode('?*||',$res);
+                //var_dump($r);
+                //echo $r[0].' NUMBER2!!<br>';
+                $this->news[$r[0]] = new Article($r[0],$r[1],$r[2],$r[3]);
+                //var_dump($this->news[$r[0]]);
+                // ->getArticle());
+            }
+        }
+        public function getArt($num)
+        {
+            return $this->news[$num];
         }
         public function getData()
         {
-            return $this->d;
+            return $this->news;
         }
-        public function append($text)
+        public function addArticle($Art)
         {
-            array_push($this->d,$text);
-            return $this;
+            $this->news[$Art->getNum()] = $Art;
         }
-        public function save()
+        public function saveNews()
         {
-            parent::writeDat($this->d);
+            parent::writeDat($this->news);
         }
     }
-    class Uploader
-    {
-        private $name;
-        public function __construct($n)
-        {
-            $this->name = $n;
-        }
-        public function isUploaded()
-        {
-            return isset($_FILES[$this->name]);
-        }
-        public function upload()
-        {
-            if($this->isUploaded())
-            {
-                if (0 == $_FILES[$this->name]['error']) 
-                {
-                    $res = move_uploaded_file( $_FILES[$this->name]['tmp_name'], __DIR__ .'/files/'.$_FILES['myimg']['name'] );
-                }
-
-            }
-        }
-    }
+    
     class View
     {
         private $data;
