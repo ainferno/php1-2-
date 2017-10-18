@@ -10,8 +10,9 @@
 <?php }} ?>
 
 <form action="index.php" method="post"> 
-    <p>Имя: <input type="text" name="Name"><p>
-    <p>Комментарий: <input type="text" name="Text"><p>
+    <p>Название: <input type="text" name="Name"><p>
+    <p>Заголовок: <input type="text" name="Title"><p>
+    <p>Текст: <input type="text" name="Body"><p>
     <input type="submit">
 </form>
 

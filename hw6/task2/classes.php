@@ -15,10 +15,8 @@
             $fil = fopen($this->fname,'w');
             foreach($dat as $rec)
             {
-                foreach($rec->getArticle() as $r)
-                {
-                    fwrite($fil,$r);
-                }
+                $r = $rec->getArticle();
+                fwrite($fil,$r['Number'].'?*||'.$r['Head'].'?*||'.$r['Title'].'?*||'.$r['Body']);
             }
             fwrite($fil,"\n");
             fclose($fil);
@@ -39,6 +37,10 @@
         {
             return $this->Number;
         }
+        public function setNum($a)
+        {
+            $this->Number = $a;
+        }
         public function getArticle()
         {
             //echo $this->Number.' NUMBER!!<br>';
@@ -49,8 +51,10 @@
     class News extends TextFile
     {
         private $news = [];
+        private $i;
         public function __construct($name)
         {
+            $this->i = 0;
             parent::__construct($name);
             $dat = parent::getDat();
             foreach($dat as $res)
@@ -58,7 +62,8 @@
                 $r = explode('?*||',$res);
                 //var_dump($r);
                 //echo $r[0].' NUMBER2!!<br>';
-                $this->news[$r[0]] = new Article($r[0],$r[1],$r[2],$r[3]);
+                $this->news[$this->i] = new Article($this->i,$r[1],$r[2],$r[3]);
+                $this->i++;
                 //var_dump($this->news[$r[0]]);
                 // ->getArticle());
             }
@@ -73,7 +78,10 @@
         }
         public function addArticle($Art)
         {
-            $this->news[$Art->getNum()] = $Art;
+            $Art->setNum($this->i);
+            $this->news[$this->i] = $Art;
+            $this->i++;
+            return $this;
         }
         public function saveNews()
         {

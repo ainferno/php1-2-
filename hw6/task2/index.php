@@ -4,10 +4,10 @@
     $nw = new News(__DIR__ .'/records');
     $vw = new View();
     
-    //if(isset($_POST['Name']))
-    //{
-    //    $gb->append($_POST['Name'].'?*||'.$_POST['Text'])->save();
-    //}
+    if(isset($_POST['Name']) && isset($_POST['Body']))
+    {
+        $nw->addArticle(new Article(0,$_POST['Name'],$_POST['Title'],$_POST['Body']))->saveNews();
+    }
     $d = $nw->getData();
     //var_dump($d);
     $i = 0;
