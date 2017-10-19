@@ -5,7 +5,7 @@
 <body>
 
 <?php if(isset($data)) { foreach($data as $record) { ?>
-<a href="/hw6/task2/article.php?id=<?php echo $record['Number']; ?>"><?php echo $record['Head'].':'; ?></a>
+<a href="/hw7/article.php?id=<?php echo $record['Number']; ?>"><?php echo $record['Head'].':'; ?></a>
 <?php echo ' '.$record['Title']; ?><br><br>
 <?php }} ?>
 

@@ -8,6 +8,6 @@
 <p><?php echo $data[0]['Body']; ?></p>
 <?php } ?>
 
-<a href="/hw6/task2/index.php"><button>Return</button></a>
+<a href="/hw7/index.php"><button>Return</button></a>
 </body>
 </html>

@@ -17,4 +17,15 @@
         $i++;
     }
     $vw->display(__DIR__ .'/template.php');
+    
+    // $db = new DataBase('localhost', 'news');
+    // $result = $db->query(
+        // 'INSERT INTO news (Name, Title, Body) VALUES (:Name,:Title,:Body)', 
+        // ['Name' => 'Alert', 'Title' => 'Crocodile eaten me', 'Body' => 'Lorem ipsum...']
+    // );        
+    // var_dump($db->dbh->errorInfo());
+    
+    // $result = $db->query('SELECT * FROM news');
+    // var_dump($result);
+    
 ?>

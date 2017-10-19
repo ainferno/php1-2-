@@ -1,10 +1,10 @@
 <?php //INSERT INTO users (name, title, body) VALUES ('Ivan', 'ivan@mail.ru', 42);
     class DataBase
     {
-        private $dbh;
-        public function __construct($user,$table)
+        public $dbh;
+        public function __construct($host,$table)
         {
-            $this->dbh = new PDO( 'mysql:host='.$user.';dbname='.$table ); 
+            $this->dbh = new PDO( 'mysql:host='.$host.';user=root;dbname='.$table ); 
             if (mysqli_connect_errno()) {
                 printf("Не удалось подключиться: %s\n", mysqli_connect_error());
                 exit();
@@ -12,12 +12,14 @@
         }
         public function execute(string $sql)
         {
+            echo $sql;
+            
             return $this->dbh->exec($sql);
         }
-        public function query(string $sql,array $data)
+        public function query(string $sql,array $data = [])
         {
             $sth = $this->dbh->prepare($sql);
-            echo '<br>'.(int)$sth->execute($data);
+            //$sth->execute($data);
             if($sth->execute($data))
             {
                 return $sth->fetchAll();
@@ -63,15 +65,17 @@
         }
         public function getDat()
         {
-            $dbdata = $this->db->execute('SELECT * FROM news');
+            $dbdata = $this->db->query('SELECT * FROM news',[]);
+            //var_dump($dbdata);
             $finaldata = [];
-            if($dbdata != 0)
-            {
+            //if($dbdata != 0)
+            //{
                 foreach($dbdata as $line)
                 {
                     $finaldata[$line[0]] = new Article($line[0],$line[1],$line[2],$line[3]);
                 }
-            }
+            //}
+            //var_dump($finaldata);
             return $finaldata;
         }
         public function append(Article $art)
@@ -80,8 +84,8 @@
             $data = [ 'Name'  => $article_data[ 'Head' ], 
                       'Title' => $article_data['Title' ], 
                       'Body'  => $article_data[ 'Body' ]];
-            $sql_request = 'INSERT INTO news (name, title, body) VALUES (Name=:Name, Title=:Title, Body=:Body);';
-            /*echo (int)*/$this->db->query($sql_request,$data);
+            $sql_request = 'INSERT INTO news (name, title, body) VALUES (:Name,:Title,:Body);';
+            $this->db->query($sql_request,$data);
             //echo 'INSERT INTO news (name, title, body) VALUES ("'.$data['Name'].'", "'.$data['Title'].'", "'.$data['Body'].'");';
             //echo $this->db->execute('INSERT INTO news (name, title, body) VALUES ("'.$data['Name'].'", "'.$data['Title'].'", "'.$data['Body'].'");');
         }

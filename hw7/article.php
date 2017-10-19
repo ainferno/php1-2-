@@ -1,7 +1,7 @@
 ﻿<?php
     include __DIR__ .'/classes.php';
     
-    $nw = new News(__DIR__ .'/records');
+    $nw = new News('news');
     $vw = new View();
     
     if(isset($_GET['id']))
