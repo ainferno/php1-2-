@@ -1,7 +1,7 @@
 ﻿<?php
-    include __DIR__ .'/classes.php';
+    include __DIR__ .'/config';
     
-    $nw = new News('news');
+    $nw = new News($host,$tablename);
     $vw = new View();
     
     if(isset($_POST['Name']) && isset($_POST['Body']))
