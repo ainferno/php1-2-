@@ -3,9 +3,9 @@
     class News
     {
         private $dbp;
-        public function __construct($host,$table)
+        public function __construct()
         {
-            $this->dbp = new DBPrepare($host,$table);
+            $this->dbp = new DBPrepare();
         }
         public function getArt($num)
         {

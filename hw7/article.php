@@ -1,7 +1,8 @@
 ﻿<?php
-    include __DIR__ .'/config';
+    include __DIR__ .'/view.php';
+    include __DIR__ .'/News.php';
     
-    $nw = new News($host,$tablename);
+    $nw = new News();
     $vw = new View();
     
     if(isset($_GET['id']))

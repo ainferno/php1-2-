@@ -1,10 +1,11 @@
 ﻿<?php
-    include __DIR__ .'/config';
+    include __DIR__ .'/view.php';
+    include __DIR__ .'/News.php';
     
-    $nw = new News($host,$tablename);
+    $nw = new News();
     $vw = new View();
     
-    if(isset($_POST['Name']) && isset($_POST['Body']))
+    if((isset($_POST['Name']) && isset($_POST['Body'])) && ($_POST['Name']!=NULL && $_POST['Body']!=NULL))
     {
         $nw->addArticle(new Article(0,$_POST['Name'],$_POST['Title'],$_POST['Body']));
     }

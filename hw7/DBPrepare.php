@@ -4,9 +4,9 @@
     class DBPrepare
     {
         private $db;
-        public function __construct(string $name,string $table)
+        public function __construct()
         {
-            $this->db = new DataBase($name,$table);
+            $this->db = new DataBase();
         }
         public function getDat()
         {

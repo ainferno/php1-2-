@@ -15,10 +15,12 @@
 
 <div class="container">
 <?php if(isset($data)) { foreach($data as $record) { ?>
-<a href="/hw7/article.php?id=<?php echo $record['Number']; ?>"><div class="panel panel-primary">
-<div class="panel-heading"><?php echo $record['Head'].':'; ?></div>
-<div class="panel-body"><?php echo ' '.$record['Title']; ?><br><br></div>
-</div></a>
+<a href="/hw7/article.php?id=<?php echo $record['Number']; ?>">
+<div class="card">
+    <div class="card-header"><?php echo $record['Head'].':'; ?></div>
+    <div class="card-body"><?php echo ' '.$record['Title']; ?><br><br></div>
+</div>
+</a>
 <?php }} ?>
 
 

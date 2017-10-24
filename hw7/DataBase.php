@@ -2,9 +2,10 @@
     class DataBase
     {
         public $dbh;
-        public function __construct($host,$table)
+        public function __construct()
         {
-            $this->dbh = new PDO( 'mysql:host='.$host.';user=root;dbname='.$table ); 
+            $data = include __DIR__ .'/config.php';
+            $this->dbh = new PDO( 'mysql:host='.$data['host'].';dbname='.$data['tablename'],$data['user'],$data['password']); 
             if (mysqli_connect_errno()) {
                 printf("Не удалось подключиться: %s\n", mysqli_connect_error());
                 exit();
